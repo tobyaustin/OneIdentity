@@ -1,10 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("OneIdentity.Test")]
+[assembly: InternalsVisibleTo("OneIdentity.Test")] // for unit testing.
 namespace OneIdentity.Business
 {
    using System;
    using System.Collections.Generic;
+   using System.Linq;
    using System.Threading.Tasks;
    using MongoDB.Driver;
    using OneIdentity.Db;
@@ -47,7 +48,7 @@ namespace OneIdentity.Business
          if (!UserIsValid(user))
             throw new Exception(InvalidUser);
 
-         // TODO: Set Id based as next available.
+         user.Id = this.GetId();
 
          await this.repository.Add(user);
       }
@@ -66,6 +67,21 @@ namespace OneIdentity.Business
             throw new Exception(UserCannotBeDeleted);
 
          await this.repository.Remove(user);
+      }
+
+      // These methods are internal to allow for unit testing.
+
+      private int GetId()
+      {
+         // This is very bad, but gets the job done for this example...
+         var id = new Random().Next(1, 999999);
+         // ReSharper disable once AccessToModifiedClosure
+         while(this.repository.Find(u => u.Id == id).Any())
+         {
+            id = new Random().Next(1, 999999);
+         }
+
+         return id;
       }
 
       internal static bool UserIsValid(User user)
