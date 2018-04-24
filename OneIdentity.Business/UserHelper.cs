@@ -43,7 +43,7 @@ namespace OneIdentity.Business
          return (T)this.repository.Get(id);
       }
 
-      public async Task Add(T user)
+      public async Task AddAsync(T user)
       {
          if (!UserIsValid(user))
             throw new Exception(InvalidUser);
@@ -53,7 +53,7 @@ namespace OneIdentity.Business
          await this.repository.Add(user);
       }
 
-      public async Task Update(T item)
+      public async Task UpdateAsync(T item)
       {
          if(!UserIsValid(item))
             throw new Exception(InvalidUser);
@@ -61,7 +61,7 @@ namespace OneIdentity.Business
          await this.repository.Update(item);
       }
 
-      public async Task Remove(T user)
+      public async Task RemoveAsync(T user)
       {
          if(!UserCanBeDeleted(user))
             throw new Exception(UserCannotBeDeleted);

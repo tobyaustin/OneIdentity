@@ -9,10 +9,10 @@
 
       T Get(int id);
 
-      Task Add(T item);
+      Task AddAsync(T item);
 
-      Task Update(T item);
+      Task UpdateAsync(T item);
 
-      Task Remove(T item);
+      Task RemoveAsync(T item);
    }
 }

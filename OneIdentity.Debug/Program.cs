@@ -40,7 +40,7 @@
 
          var userHelper = new UserHelper<User>("mongodb://localhost:27017", "oneIdentity");
 #pragma warning disable 4014
-         userHelper.Add(user);
+         userHelper.AddAsync(user);
 #pragma warning restore 4014
 
          //var client = new MongoClient("mongodb://localhost:27017");

@@ -1,5 +1,6 @@
 ﻿namespace OneIdentity.Test
 {
+   using System.Threading.Tasks;
    using MongoDB.Driver;
    using Moq;
    using NUnit.Framework;
@@ -12,22 +13,24 @@
    public class UserTest
    {
       [Test]
-      public async void TestUserCanBeCreated()
+      public async Task TestUserCanBeCreatedAsync()
       {
          var user = GetTestUser();
          var mock = new Mock<IMongoClient>();
          var userHelper = new UserHelper<User>(mock.Object, "user");
-         await userHelper.Add(user);
+         await userHelper.AddAsync(user);
       }
 
       // TODO: Other CRUD tests.
 
+      [Test]
       public void TestVerifyUserReturnsTrueWhenValid()
       {
          var user = GetTestUser();
          Assert.That(UserHelper<User>.UserIsValid(user), Is.EqualTo(true));
       }
 
+      [Test]
       public void TestVerifyUserReturnsFalseWhenIdIsIncorrect()
       {
          var user = GetTestUser();

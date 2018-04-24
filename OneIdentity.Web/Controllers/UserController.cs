@@ -34,7 +34,7 @@
       [HttpPost]
       public void Post([FromBody] User value)
       {
-         this.helper.Add(value);
+         this.helper.AddAsync(value);
       }
 
       // PUT: api/User/5
@@ -42,7 +42,7 @@
       public void Put(int id, [FromBody] User value)
       {
          value.Id = id;
-         this.helper.Update(value);
+         this.helper.UpdateAsync(value);
       }
 
       // DELETE: api/ApiWithActions/5
@@ -50,7 +50,7 @@
       public void Delete(int id)
       {
          var user = this.helper.Get(id);
-         this.helper.Remove(user);
+         this.helper.RemoveAsync(user);
       }
    }
 }
