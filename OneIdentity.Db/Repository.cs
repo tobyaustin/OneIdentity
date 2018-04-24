@@ -1,5 +1,6 @@
 ﻿namespace OneIdentity.Db
 {
+   using System.Linq;
    using System.Threading.Tasks;
    using MongoDB.Driver;
 
@@ -19,6 +20,7 @@
 
       public async Task Update(T entity)
       {
+         entity.ObjectId = this.Collection.AsQueryable().Single(e => e.Id == entity.Id).ObjectId;
          await this.Collection.ReplaceOneAsync(GetFilter(entity), entity);
       }
 

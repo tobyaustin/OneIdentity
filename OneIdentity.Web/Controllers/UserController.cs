@@ -41,7 +41,7 @@
       [HttpPut("{id}")]
       public void Put(int id, [FromBody] User value)
       {
-         value.Id = id;
+         value.Id = id; // TODO: Should maybe reject if value.Id ?? id != id.
          this.helper.UpdateAsync(value);
       }
 

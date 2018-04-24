@@ -4,7 +4,8 @@
    // mongoimport --jsonArray /d oneIdentity /c user /file c:\tmp\users.json
 
    using System;
-   using OneIdentity.Business;
+   using System.Linq;
+   using MongoDB.Driver;
    using OneIdentity.Db.Models;
 
    public class Program
@@ -17,7 +18,7 @@
 
          var user = new User
          {
-            Id = 99,
+            Id = 228463,
             Name = "Toby Austin",
             Username = "toby_austin",
             Email = "someone@somewhere.com",
@@ -38,14 +39,19 @@
             Company = null
          };
 
-         var userHelper = new UserHelper<User>("mongodb://localhost:27017", "oneIdentity");
-#pragma warning disable 4014
-         userHelper.AddAsync(user);
-#pragma warning restore 4014
+         //var userHelper = new UserHelper<User>("mongodb://localhost:27017", "oneIdentity");
+         //#pragma warning disable 4014
+         //userHelper.UpdateAsync(user);
+         //#pragma warning restore 4014
 
-         //var client = new MongoClient("mongodb://localhost:27017");
-         //client.GetDatabase("oneIdentity");
-         
+         var client = new MongoClient("mongodb://localhost:27017");
+         var db = client.GetDatabase("oneIdentity");
+         var collection = db.GetCollection<User>("user");
+         var existingUser = collection.AsQueryable().Single(u => u.Id == 228463);
+         user.ObjectId = existingUser.ObjectId;
+         var filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);
+         collection.ReplaceOneAsync(filter, user);
+
          Console.WriteLine("Debug completed.");
       }
    }

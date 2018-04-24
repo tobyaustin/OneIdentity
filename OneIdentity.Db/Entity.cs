@@ -8,7 +8,7 @@
       [BsonElement("id")]
       public int Id { get; set; }
 
-      [BsonId]
-      private ObjectId ObjectId { get; set; } // TODO: Required?
+      [BsonId] 
+      public ObjectId ObjectId { get; set; } // TODO: Required?
    }
 }
