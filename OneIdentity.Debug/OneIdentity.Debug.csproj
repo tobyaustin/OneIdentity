@@ -9,4 +9,8 @@
     <PackageReference Include="MongoDB.Driver" Version="2.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OneIdentity.Business\OneIdentity.Business.csproj" />
+  </ItemGroup>
+
 </Project>
